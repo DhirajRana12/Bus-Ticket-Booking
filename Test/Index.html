@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Bus Ticket Booking</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+    <header class="bg-green-600 text-white shadow-lg">
+        <div class="container mx-auto flex justify-between items-center py-4 px-6">
+            <div class="logo">
+                <img src="Buslogo.jpg" alt="Bus Ticket System" class="h-12">
+            </div>
+            <nav class="flex gap-6">
+                <a href="#" class="hover:bg-green-700 py-2 px-4 rounded">Bus Tickets</a>
+                <a href="#" class="hover:bg-green-700 py-2 px-4 rounded">Help</a>
+                <div class="relative">
+                    <button id="accountBtn" class="hover:bg-green-700 py-2 px-4 rounded focus:outline-none">Account</button>
+                    <div class="dropdown-content absolute hidden bg-white text-black shadow-lg rounded mt-2 w-48">
+                        <a href="#" id="loginBtn" class="block px-4 py-2 hover:bg-gray-200">Login</a>
+                        <a href="#" id="registerBtn" class="block px-4 py-2 hover:bg-gray-200">Register</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero bg-cover bg-center text-white" style="background-image: url('bus.jpg');">
+        <div class="container mx-auto text-center py-32">
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold">Find Your Bus, Book Your Seat</h1>
+        </div>
+    </section>
+
+    <section class="search-container py-12">
+        <div class="container mx-auto">
+            <div class="search-box bg-white p-8 rounded-lg shadow-lg flex flex-col md:flex-row justify-center gap-6">
+                <div class="search-item flex flex-col">
+                    <label for="from" class="font-semibold mb-2">From</label>
+                    <input type="text" id="from" placeholder="Enter departure location" class="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600">
+                </div>
+                <div class="search-item flex flex-col">
+                    <label for="to" class="font-semibold mb-2">To</label>
+                    <input type="text" id="to" placeholder="Enter destination" class="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600">
+                </div>
+                <div class="search-item flex flex-col">
+                    <label for="date" class="font-semibold mb-2">Date</label>
+                    <input type="date" id="date" class="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600">
+                </div>
+                <div class="search-button flex items-end">
+                    <button class="bg-green-600 text-white py-3 px-6 rounded-lg hover:bg-green-700 transition duration-300">Search Buses</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="bookingSection" class="py-12 bg-gray-100">
+        <div id="bookingForm" class="container mx-auto bg-white p-8 rounded-lg shadow-lg">
+            <h2 class="text-3xl font-bold mb-6 text-center">Book Your Seat</h2>
+            <form action="book_seat.php" method="POST">
+                <input type="hidden" name="bus_id" value="{selected_bus_id}">
+                <div class="form-group mb-4">
+                    <label for="seat_number" class="block text-lg font-semibold mb-2">Seat Number</label>
+                    <input type="number" id="seat_number" name="seat_number" required class="p-3 border rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-green-600">
+                </div>
+                <button type="submit" name="book" class="btn bg-green-600 text-white py-3 px-6 rounded-lg w-full hover:bg-green-700 transition duration-300">Book Now</button>
+            </form>
+        </div>
+    </section>
+
+    <section class="offers py-12">
+        <div class="container mx-auto text-center">
+            <h2 class="text-4xl font-bold mb-8">Trending Offers</h2>
+            <div class="offer-cards flex flex-wrap justify-center gap-6">
+                <!-- Add offer cards here -->
+            </div>
+        </div>
+    </section>
+<!-- Login/Registration Modal -->
+<div id="accountModal" class="modal fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
+    <div class="modal-content bg-white p-8 rounded-lg shadow-lg w-full max-w-md mx-auto">
+        <span class="close text-gray-500 float-right text-2xl cursor-pointer">&times;</span>
+        <h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
+        <form id="loginForm" action="login.php" method="POST">
+            <div class="form-group mb-4">
+                <label for="email" class="block text-lg font-semibold mb-2">Email</label>
+                <input type="email" id="loginEmail" name="email" required class="p-3 border rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-green-600">
+            </div>
+            <div class="form-group mb-6">
+                <label for="password" class="block text-lg font-semibold mb-2">Password</label>
+                <input type="password" id="loginPassword" name="password" required class="p-3 border rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-green-600">
+            </div>
+            <button type="submit" class="btn bg-green-600 text-white py-3 px-6 rounded-lg w-full hover:bg-green-700 transition duration-300">Login</button>
+        </form>
+        <p class="text-center mt-4">Don't have an account? <a href="#" id="showRegisterForm" class="text-green-600 hover:underline">Register here</a></p>
+
+        <!-- Registration Form -->
+        <form id="registerForm" action="register.php" method="POST" class="hidden mt-6">
+            <div class="form-group mb-4">
+                <label for="username" class="block text-lg font-semibold mb-2">Username</label>
+                <input type="text" id="username" name="username" required class="p-3 border rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-green-600">
+            </div>
+            <div class="form-group mb-4">
+                <label for="email" class="block text-lg font-semibold mb-2">Email</label>
+                <input type="email" id="registerEmail" name="email" required class="p-3 border rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-green-600">
+            </div>
+            <div class="form-group mb-4">
+                <label for="password" class="block text-lg font-semibold mb-2">Password</label>
+                <input type="password" id="registerPassword" name="password" required class="p-3 border rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-green-600">
+            </div>
+            <div class="form-group mb-6">
+                <label for="accountType" class="block text-lg font-semibold mb-2">Register as</label>
+                <select id="accountType" name="account_type" required class="p-3 border rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-green-600">
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
+            <button type="submit" class="btn bg-green-600 text-white py-3 px-6 rounded-lg w-full hover:bg-green-700 transition duration-300">Register</button>
+        </form>
+    </div>
+</div>
+
+
+    <footer class="bg-gray-800 text-white py-4 mt-8 shadow-lg">
+        <div class="container mx-auto text-center">
+            <p>Contact Us | Privacy Policy</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
